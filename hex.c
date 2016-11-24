@@ -2,67 +2,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BLK 1;
-#define WHT 2;
+#define BLK 1
+#define WHT 2
+#define SIZE 14
 
 int **create_table()
 {
     int **table;
     int i;
-    table = malloc(14 * sizeof(int *));
+    table = malloc(SIZE * sizeof(int *));
     if (table != NULL)
-        for (i = 0; i < 14; i++)
+        for (i = 0; i < SIZE; i++)
         {
-            table[i] = calloc(14, sizeof(int));
+            table[i] = calloc(SIZE, sizeof(int));
             if (table[i] == NULL)
                 return NULL;
         }
     return table;
 }
 
-int mmiterate(int alpha, int beta, int max)
-{
-}
-
-void check_neighbor(int **table, int **board, int l, int c, int color, int val)
-{
-    if (board[l][c] == color)
-    {
-        if (table[l][c] == 0)
-            table[l][c] = val;
-
-        if (board[l - 1][c] == 0)
-            table[l - 1][c] = val + 1;
-        else if (board[l - 1][c] == color)
-            check_neighbor(table, board, l - 1, c, color, val);
-
-        if (board[l - 1][c + 1] == 0)
-            table[l - 1][c + 1] = val + 1;
-        else if (board[l - 1][c + 1] == color)
-            check_neighbor(table, board, l - 1, c + 1, color, val);
-
-        if (board[l][c + 1] == 0)
-            table[l][c + 1] = val + 1;
-        else if (board[l][c + 1] == color)
-            check_neighbor(table, board, l, c + 1, color, val);
-
-        if (board[l + 1][c] == 0)
-            table[l + 1][c] = val + 1;
-        else if (board[l + 1][c] == color)
-            check_neighbor(table, board, l + 1, c, color, val);
-
-        if (board[l + 1][c - 1] == 0)
-            table[l + 1][c - 1] = val + 1;
-        else if (board[l + 1][c - 1] == color)
-            check_neighbor(table, board, l + 1, c - 1, color, val);
-
-        if (board[l][c - 1] == 0)
-            table[l][c - 1] = val + 1;
-        else if (board[l][c - 1] == color)
-            check_neighbor(table, board, l, c - 1, color, val);
-    }
-    return;
-}
 
 play *bridge_vect(int **board, play p)
 {
@@ -77,22 +35,14 @@ play *bridge_vect(int **board, play p)
     }
 }
 
-int play_value(int **board, int color)
+void my_play(int **table, int color, play *plays, int nplays)
 {
-    int **aux, i, j;
-    aux = create_table();
-    for (i = 0; i < 14; i++)
+    int i, j;
+    play act_play = plays[nplays-1];
+    if (color == BLK)
     {
-        for (j = 0; j < 14; j++)
-        {
-            if (board[i][j] == 0 && aux[i][j] == 0)
-                aux[i][j] = i + 1;
-            else if (board[i][j] == color)
-            {
-                aux[i][j] = i + 1;
-                check_neighbor(aux, board, i, j, color, i + 1);
-            }
-        }
+        if (act_play.c < SIZE/2)
+            for (i = act_play.l; table[i][act_play.c] == (color == WHT)?BLK:WHT && i; i--)
     }
 }
 
@@ -116,10 +66,9 @@ int main(int argc, char *argv[])
     while (1)
     {
         scanf("%d %d", &p.l, &p.c);
-        if (p.l <= 13 && p.l >= 0 && p.c <= 13 && p.c >= 0)
-            for (i = 0; i < nplays; i++)
-                if (plays[i].c == p.c && plays[i].l == p.l)
-                    if (nplays == 1)
-                        /*pierule*/;
+        if (p.l < SIZE  && p.l >= 0 && p.c < SIZE && p.c >= 0)
+            if (table[p.l][p.c] != 0)
+                if (nplays == 1)
+                    /*pierule*/;
     }
 }

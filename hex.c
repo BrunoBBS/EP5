@@ -64,6 +64,19 @@ void check_neighbor(int **table, int **board, int l, int c, int color, int val)
     return;
 }
 
+play *bridge_vect(int **board, play p)
+{
+    int count = 0;
+    play *bridges = malloc(6 * sizeof(play));
+
+    if (p.l > 0 && p.c > 0)
+    {
+        bridges[count].l = p.l - 1;
+        bridges[count].c = p.c - 1;
+        count++;
+    }
+}
+
 int play_value(int **board, int color)
 {
     int **aux, i, j;

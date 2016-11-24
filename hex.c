@@ -35,6 +35,64 @@ play *bridge_vect(int **board, play p)
     }
 }
 
+void check_neighbor(int **table, int **board, int l, int c, int color)
+{
+    if (board[l][c] == color)
+    {
+
+        if (board[l - 1][c] == 0)
+            table[l - 1][c] = 1;
+        else if (board[l - 1][c] == color)
+            check_neighbor(table, board, l - 1, c, color);
+
+        if (board[l - 1][c + 1] == 0)
+            table[l - 1][c + 1] = 1;
+        else if (board[l - 1][c + 1] == color)
+            check_neighbor(table, board, l - 1, c + 1, color);
+
+        if (board[l][c + 1] == 0)
+            table[l][c + 1] = 1;
+        else if (board[l][c + 1] == color)
+            check_neighbor(table, board, l, c + 1, color);
+
+        if (board[l + 1][c] == 0)
+            table[l + 1][c] = 1;
+        else if (board[l + 1][c] == color)
+            check_neighbor(table, board, l + 1, c, color);
+
+        if (board[l + 1][c - 1] == 0)
+            table[l + 1][c - 1] = 1;
+        else if (board[l + 1][c - 1] == color)
+            check_neighbor(table, board, l + 1, c - 1, color);
+
+        if (board[l][c - 1] == 0)
+            table[l][c - 1] = 1;
+        else if (board[l][c - 1] == color)
+            check_neighbor(table, board, l, c - 1, color);
+
+        if (board[l+1][c - 2] == 0)
+            table[l+1][c -2] = 1;
+        else if (board[l+1][c - 2] == color)
+            check_neighbor(table, board, l+1, c - 2, color);
+
+        if (board[l+2][c -1] == 0)
+            table[l+2][c - 1] = 1;
+        else if (board[l+2][c - 1] == color)
+            check_neighbor(table, board, l+2, c - 1, color);
+
+        if (board[l-1][c - 1] == 0)
+            table[l-1][c - 1] = 1;
+        else if (board[l-1][c - 1] == color)
+            check_neighbor(table, board, l-1, c - 1, color);
+
+        if (board[l-1][c + 2] == 0)
+            table[l-1][c +2] = 1;
+        else if (board[l-1][c +2] == color)
+            check_neighbor(table, board, l-1, c+2, color);
+    }
+    return;
+}
+
 void my_play(int **table, int color, play *plays, int nplays)
 {
     int i, j;
@@ -42,21 +100,51 @@ void my_play(int **table, int color, play *plays, int nplays)
     if (color == BLK)
     {
         if (act_play.c < SIZE/2)
-            for (i = act_play.l; table[i][act_play.c] == (color == WHT)?BLK:WHT && i; i--)
+        {
+            if (table[act_play.l - 1][act_play.c] == 0)
+            {
+                table[act_play.l - 1][act_play.c] = color;
+            }
+            else if (table[act_play.l - 1][act_play.c + 1] == 0 )
+            {
+                table[act_play.l - 1][act_play.c+1] = color;
+            }
+            else
+            {
+                for (i = act_play.l; table[i][act_play.c] ==
+                        (color == WHT)?BLK:WHT && i; i--);
+                if(i>0)
+                    table[i][act_play.c] = color;
+                else
+                {
+                    for (i = 0; table[act_play.l - i][act_play.c+i] ==
+                            (color == WHT)?BLK:WHT && ((act_play.l -i)>-1) &&
+                            ((act_play.c + i)<SIZE);i++);
+                    if ()
+
+                }
+            }
+        }
     }
 }
 
+int has_won(int **table)
+{
+
+}
 int main(int argc, char *argv[])
 {
-    int mode, dbg, **table, i, nplays;
+    int color, dbg, **table, nplays = 1;
     play p, *plays;
+
+    plays = malloc(200 * sizeof(play));
 
     if (argv[1][0] == 'b')
     {
-        mode = BLK;
+        color = BLK;
     }
     else
-        mode = WHT;
+        color = WHT;
 
     if (argc == 3)
         if (argv[2][0] == 'd')
@@ -68,7 +156,11 @@ int main(int argc, char *argv[])
         scanf("%d %d", &p.l, &p.c);
         if (p.l < SIZE  && p.l >= 0 && p.c < SIZE && p.c >= 0)
             if (table[p.l][p.c] != 0)
-                if (nplays == 1)
-                    /*pierule*/;
+            {
+                if (nplays == 1 && p.c == plays[0].c && p.l == plays[0].l)
+                    color = (color == WHT)?BLK:WHT;
+                plays[nplays-1] = p;
+                nplays ++;
+            }
     }
 }

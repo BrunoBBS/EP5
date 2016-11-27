@@ -1,5 +1,5 @@
 CC:=gcc
-CFLAGS:=-Wall -ansi -pedantic -g -O2
+CFLAGS:=-Wall -ansi -pedantic -g
 BIN:=ep5
 
 #make binaries
@@ -21,4 +21,4 @@ $(BIN):hex.o
 
 clean:
 	rm -f $(BIN)
-	rm -f player.o
+	rm -f hex.o

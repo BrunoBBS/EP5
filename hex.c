@@ -25,30 +25,32 @@ int **create_table()
 void my_play_b(int **table, int color, play plays[], int nplays)
 {
     int i, j;
-    play enemy_play = plays[nplays-2];
+    play enemy_play = plays[nplays - 2];
     if (color == BLK)
     {
-        if (enemy_play.c < SIZE/2)
+        if (enemy_play.c < SIZE / 2)
         {
             if (enemy_play.l - 1 >= 0 &&
-                    table[enemy_play.l - 1][enemy_play.c] == 0)
+                table[enemy_play.l - 1][enemy_play.c] == 0)
             {
                 table[enemy_play.l - 1][enemy_play.c] = color;
-                printf("%d %d\n", enemy_play.l-1, enemy_play.c);
+                printf("%d %d\n", enemy_play.l - 1, enemy_play.c);
             }
-            else if (enemy_play.l -1 >= 0 && enemy_play.c + 1 <
-                    SIZE && table[enemy_play.l - 1][enemy_play.c + 1] == 0 )
+            else if (enemy_play.l - 1 >= 0 && enemy_play.c + 1 < SIZE &&
+                     table[enemy_play.l - 1][enemy_play.c + 1] == 0)
             {
-                table[enemy_play.l - 1][enemy_play.c+1] = color;
-                printf("%d %d\n", enemy_play.l-1, enemy_play.c+1);
+                table[enemy_play.l - 1][enemy_play.c + 1] = color;
+                printf("%d %d\n", enemy_play.l - 1, enemy_play.c + 1);
             }
             else
             {
                 for (i = 0; (enemy_play.l - i) >= 0 &&
-                        table[enemy_play.l - i][enemy_play.c] ==
-                        ((color == WHT)?BLK:WHT); i++);
-                if((enemy_play.l - i) >= 0 &&
-                        table[enemy_play.l - i][enemy_play.c] == 0)
+                            table[enemy_play.l - i][enemy_play.c] ==
+                                ((color == WHT) ? BLK : WHT);
+                     i++)
+                    ;
+                if ((enemy_play.l - i) >= 0 &&
+                    table[enemy_play.l - i][enemy_play.c] == 0)
                 {
                     table[enemy_play.l - i][enemy_play.c] = color;
                     printf("%d %d\n", enemy_play.l - i, enemy_play.c);
@@ -56,22 +58,23 @@ void my_play_b(int **table, int color, play plays[], int nplays)
                 else
                 {
                     for (i = 0; ((enemy_play.l + i) < SIZE) &&
-                            ((enemy_play.c - i) > -1) &&
-                            table[enemy_play.l + i][enemy_play.c-i] ==
-                            ((color == WHT)?BLK:WHT); i++);
+                                ((enemy_play.c - i) > -1) &&
+                                table[enemy_play.l + i][enemy_play.c - i] ==
+                                    ((color == WHT) ? BLK : WHT);
+                         i++)
+                        ;
                     if (enemy_play.l + i < SIZE && enemy_play.c - i >= 0 &&
-                            table[enemy_play.l + i][enemy_play.c - i] ==
-                            ((color == WHT)?BLK:WHT))
+                        table[enemy_play.l + i][enemy_play.c - i] ==
+                            ((color == WHT) ? BLK : WHT))
                     {
                         do
                         {
                             i = rand() % SIZE;
                             j = rand() % SIZE;
-                        } while(table[i][j] != 0);
+                        } while (table[i][j] != 0);
 
                         table[i][j] = color;
                         printf("%d %d\n", i, j);
-
                     }
                 }
             }
@@ -80,45 +83,51 @@ void my_play_b(int **table, int color, play plays[], int nplays)
         else
         {
             if (enemy_play.l + 1 < SIZE &&
-                    table[enemy_play.l + 1][enemy_play.c] == 0)
+                table[enemy_play.l + 1][enemy_play.c] == 0)
             {
                 table[enemy_play.l + 1][enemy_play.c] = color;
-                printf("%d %d\n", enemy_play.l + 1 , enemy_play.c);
+                printf("%d %d\n", enemy_play.l + 1, enemy_play.c);
             }
             else if (enemy_play.l + 1 < SIZE && enemy_play.c - 1 >= 0 &&
-                    table[enemy_play.l + 1][enemy_play.c - 1] == 0 )
+                     table[enemy_play.l + 1][enemy_play.c - 1] == 0)
             {
                 table[enemy_play.l + 1][enemy_play.c - 1] = color;
-                printf("%d %d\n", enemy_play.l + 1 , enemy_play.c-1);
+                printf("%d %d\n", enemy_play.l + 1, enemy_play.c - 1);
             }
             else
             {
                 for (i = 0; enemy_play.l + i < SIZE &&
-                        table[enemy_play.l + i][enemy_play.c] ==
-                        ((color == WHT)?BLK:WHT); i++);
-                if(enemy_play.l + i < SIZE && table[enemy_play.l + i][enemy_play.c]  == 0)
+                            table[enemy_play.l + i][enemy_play.c] ==
+                                ((color == WHT) ? BLK : WHT);
+                     i++)
+                    ;
+                if (enemy_play.l + i < SIZE &&
+                    table[enemy_play.l + i][enemy_play.c] == 0)
                 {
                     table[enemy_play.l + i][enemy_play.c] = color;
-                    printf("%d %d\n", enemy_play.l + i , enemy_play.c);
+                    printf("%d %d\n", enemy_play.l + i, enemy_play.c);
                 }
                 else
                 {
-                    for (i = 0; ((enemy_play.l -i)>-1) &&
-                            ((enemy_play.c + i)<SIZE) &&
-                            table[enemy_play.l - i][enemy_play.c+i] ==
-                            ((color == WHT)?BLK:WHT) ; i++);
+                    for (i = 0; ((enemy_play.l - i) > -1) &&
+                                ((enemy_play.c + i) < SIZE) &&
+                                table[enemy_play.l - i][enemy_play.c + i] ==
+                                    ((color == WHT) ? BLK : WHT);
+                         i++)
+                        ;
                     if (enemy_play.l + i < SIZE && enemy_play.c - i >= 0 &&
-                            table[enemy_play.l - i][enemy_play.c + i] ==
-                            (color == WHT)?BLK:WHT)
+                                table[enemy_play.l - i][enemy_play.c + i] ==
+                                    (color == WHT)
+                            ? BLK
+                            : WHT)
                     {
                         do
                         {
                             i = rand() % SIZE;
                             j = rand() % SIZE;
-                        } while(table[i][j] != 0);
+                        } while (table[i][j] != 0);
                         table[i][j] = color;
                         printf("%d %d\n", i, j);
-
                     }
                 }
             }
@@ -128,7 +137,7 @@ void my_play_b(int **table, int color, play plays[], int nplays)
 
 void my_play_w(int **table, int color, play wplay, play my_plays[], int *nwplays)
 {
-    int l,c;
+    int l, c;
     if (*nwplays < (SIZE / 2))
     {
         l = wplay.l - (2 * *nwplays);
@@ -153,7 +162,7 @@ void my_play_w(int **table, int color, play wplay, play my_plays[], int *nwplays
         table[l][c] = color;
         my_plays[*nwplays].l = l;
         my_plays[*nwplays].c = c;
-        (*nwplays) ++;
+        (*nwplays)++;
         printf("%d %d\n", l, c);
     }
     else
@@ -174,20 +183,20 @@ void my_play_w(int **table, int color, play wplay, play my_plays[], int *nwplays
             }
         }
         table[l][c] = color;
-        (*nwplays) --;
+        (*nwplays)--;
     }
 }
 
 void print(int **table)
 {
-    int i,j;
-    for (i = 0; i<SIZE ;i++)
+    int i, j;
+    for (i = 0; i < SIZE; i++)
     {
-        for (j = 0; j<i ; j++)
+        for (j = 0; j < i; j++)
         {
             fprintf(stderr, " ");
         }
-        for (j=0; j<SIZE; j++)
+        for (j = 0; j < SIZE; j++)
         {
             if (table[i][j] == 0)
                 fprintf(stderr, "-");
@@ -203,7 +212,7 @@ void print(int **table)
 int has_won(int **table, int **aux, int color, int l, int c)
 {
     int winner;
-    if (l >= 0 && l < SIZE && c >= 0 && c< SIZE)
+    if (l >= 0 && l < SIZE && c >= 0 && c < SIZE)
     {
         if (table[l][c] == color)
         {
@@ -212,27 +221,27 @@ int has_won(int **table, int **aux, int color, int l, int c)
             if (color == WHT && l == 0)
                 return 1;
 
-            winner = has_won(table, aux, color, l-1, c+1);
+            winner = has_won(table, aux, color, l - 1, c + 1);
             if (winner)
                 return winner;
 
-            winner= has_won(table, aux, color, l-1, c);
+            winner = has_won(table, aux, color, l - 1, c);
             if (winner)
                 return winner;
 
-            winner = has_won(table, aux, color, l, c-1);
+            winner = has_won(table, aux, color, l, c - 1);
             if (winner)
                 return winner;
 
-            winner = has_won(table, aux, color, l-1, c-1);
+            winner = has_won(table, aux, color, l - 1, c - 1);
             if (winner)
                 return winner;
 
-            winner = has_won(table, aux, color, l+1, c);
+            winner = has_won(table, aux, color, l + 1, c);
             if (winner)
                 return winner;
 
-            winner = has_won(table, aux, color, l, c+1);
+            winner = has_won(table, aux, color, l, c + 1);
             if (winner)
                 return winner;
         }
@@ -256,7 +265,7 @@ int main(int argc, char *argv[])
     {
         color = WHT;
     }
-    else if(argc > 1 && argv[1][0] == 'p')
+    else if (argc > 1 && argv[1][0] == 'p')
     {
         color = BLK;
     }
@@ -281,19 +290,18 @@ int main(int argc, char *argv[])
         }
         if (winner)
         {
-            fprintf(stderr, "%s ganhou\n", (color == BLK)?"p":"b");
+            fprintf(stderr, "%s ganhou\n", (color == BLK) ? "p" : "b");
             break;
         }
         for (i = 0; i < SIZE && winner == 0; i++)
         {
-            winner = has_won(table, aux, (color == BLK)?WHT:BLK, 0, 0);
+            winner = has_won(table, aux, (color == BLK) ? WHT : BLK, 0, 0);
         }
         if (winner)
         {
-            fprintf(stderr, "%s ganhou\n", (color == BLK)?"b":"p");
+            fprintf(stderr, "%s ganhou\n", (color == BLK) ? "b" : "p");
             break;
         }
-
 
         if (color == WHT)
         {
@@ -302,7 +310,7 @@ int main(int argc, char *argv[])
         while (1)
         {
             scanf("%d %d", &p.l, &p.c);
-            if (p.l < SIZE  && p.l >= 0 && p.c < SIZE && p.c >= 0)
+            if (p.l < SIZE && p.l >= 0 && p.c < SIZE && p.c >= 0)
             {
                 if (nplays == 1 && table[p.l][p.c] != 0)
                 {
@@ -313,25 +321,24 @@ int main(int argc, char *argv[])
                     break;
                 }
             }
-
         }
         if (table[p.l][p.c] != 0)
         {
             if (nplays == 1 && p.c == plays[0].c && p.l == plays[0].l)
             {
                 /*pie rule*/
-                color = ((color == WHT)?BLK:WHT);
-                plays[nplays-1] = p;
-                nplays ++;
+                color = ((color == WHT) ? BLK : WHT);
+                plays[nplays - 1] = p;
+                nplays++;
             }
             continue;
         }
 
         else
         {
-            table[p.l][p.c] = ((color == WHT)?BLK:WHT);
-            plays[nplays-1] = p;
-            nplays ++;
+            table[p.l][p.c] = ((color == WHT) ? BLK : WHT);
+            plays[nplays - 1] = p;
+            nplays++;
         }
         if (color == BLK)
             my_play_b(table, color, plays, nplays);
